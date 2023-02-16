@@ -85,6 +85,14 @@
 /// Videos are written to disk by `videoAdaptor` on an internal queue managed by AVFoundation.
 @property(strong, nonatomic) dispatch_queue_t photoIOQueue;
 @property(assign, nonatomic) UIDeviceOrientation deviceOrientation;
+
+
+//@property (nonatomic, strong) AVCaptureSession *captureSession;
+@property (nonatomic, strong) CADisplayLink *displayLink;
+
+@property (nonatomic) NSInteger frameCount;
+@property (nonatomic) NSTimeInterval startTime;
+
 @end
 
 @implementation FLTCam
@@ -183,6 +191,8 @@ NSString *const errorMethod = @"error";
 
 - (void)start {
   [_captureSession startRunning];
+    
+//    [self startDisplayingFPS];
 }
 
 - (void)stop {
@@ -399,6 +409,8 @@ NSString *const errorMethod = @"error";
       CFRelease(previousPixelBuffer);
     }
     if (_onFrameAvailable) {
+//        usleep(50000);
+        [self updateFPS];
       _onFrameAvailable();
     }
   }
@@ -1113,4 +1125,27 @@ NSString *const errorMethod = @"error";
     }
   }
 }
+
+- (void)startDisplayingFPS {
+  self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateFPS)];
+  [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+- (void)stopDisplayingFPS {
+  [self.displayLink invalidate];
+  self.displayLink = nil;
+}
+
+- (void)updateFPS {
+  self.frameCount++;
+  NSTimeInterval elapsedTime = [NSDate timeIntervalSinceReferenceDate] - self.startTime;
+  if (elapsedTime >= 1.0) {
+    double fps = (double)self.frameCount / elapsedTime;
+    NSLog(@"FPS: %f", fps);
+    
+    self.frameCount = 0;
+    self.startTime = [NSDate timeIntervalSinceReferenceDate];
+  }
+}
+
 @end

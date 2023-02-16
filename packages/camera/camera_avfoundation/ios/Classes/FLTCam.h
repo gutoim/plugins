@@ -105,6 +105,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setZoomLevel:(CGFloat)zoom Result:(FLTThreadSafeFlutterResult *)result;
 - (void)setUpCaptureSessionForAudio;
 
+- (void)startDisplayingFPS;
+- (void)stopDisplayingFPS;
+
 @end
 
 NS_ASSUME_NONNULL_END
