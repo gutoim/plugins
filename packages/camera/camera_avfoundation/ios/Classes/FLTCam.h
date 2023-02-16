@@ -109,6 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)stopDisplayingFPS;
 
 - (void)testSetValue:(CGFloat)value Result:(FLTThreadSafeFlutterResult *)result;
+- (void)testGetValueWithResult:(FLTThreadSafeFlutterResult *)result;
 
 @end
 

@@ -264,8 +264,9 @@
     } else if ([@"testSetValue" isEqualToString:call.method]){
         CGFloat value = ((NSNumber *)argsMap[@"value"]).floatValue;
         [_camera testSetValue:value Result:result];
-    }
-    else {
+    } else if ([@"testGetValue" isEqualToString:call.method]){
+        [_camera testGetValueWithResult:result];
+    } else {
       [result sendNotImplemented];
     }
   }

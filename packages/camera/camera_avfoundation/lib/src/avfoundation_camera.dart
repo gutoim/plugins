@@ -519,7 +519,7 @@ class AVFoundationCamera extends CameraPlatform {
   @override
   Future<void> testSetValue(int cameraId, double value) async {
     try {
-      await _channel.invokeMethod<double>(
+      await _channel.invokeMethod<void>(
         'testSetValue',
         <String, dynamic>{
           'cameraId': cameraId,
@@ -529,6 +529,16 @@ class AVFoundationCamera extends CameraPlatform {
     } on PlatformException catch (e) {
       throw CameraException(e.code, e.message);
     }
+  }
+
+  @override
+  Future<double> testGetValue(int cameraId) async {
+    final double? value = await _channel.invokeMethod<double>(
+      'testGetValue',
+      <String, dynamic>{'cameraId': cameraId},
+    );
+
+    return value!;
   }
 
   /// Returns the flash mode as a String.

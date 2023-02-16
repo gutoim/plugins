@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:developer' as logger;
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -164,16 +165,32 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: ElevatedButton(
-                onPressed: () {
-                  _testSetValue();
-                },
-                child: Text('testSetValue')),
-          ),
+          _testingWidget(),
         ],
       ),
+    );
+  }
+
+  Widget _testingWidget() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ElevatedButton(
+              onPressed: () {
+                _testSetValue();
+              },
+              child: const Text('testSetValue')),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ElevatedButton(
+              onPressed: () {
+                _testGetValue();
+              },
+              child: const Text('testGetValue')),
+        ),
+      ],
     );
   }
 
@@ -1067,6 +1084,20 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
     try {
       await controller!.testSetValue(-10);
+    } on CameraException catch (e) {
+      _showCameraException(e);
+      return;
+    }
+  }
+
+  Future<void> _testGetValue() async {
+    if (controller == null) {
+      return;
+    }
+
+    try {
+      final double value = await controller!.testGetValue();
+      logger.log('Get value $value');
     } on CameraException catch (e) {
       _showCameraException(e);
       return;

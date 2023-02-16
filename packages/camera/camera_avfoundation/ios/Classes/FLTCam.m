@@ -1166,4 +1166,9 @@ NSString *const errorMethod = @"error";
     [result sendSuccess];
 }
 
+- (void)testGetValueWithResult:(FLTThreadSafeFlutterResult *)result {
+    CGFloat value = 20;
+    [result sendSuccessWithData:[NSNumber numberWithFloat:value]];
+}
+
 @end
