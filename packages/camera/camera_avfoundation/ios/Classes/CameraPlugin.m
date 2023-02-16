@@ -261,7 +261,11 @@
       [_camera pausePreviewWithResult:result];
     } else if ([@"resumePreview" isEqualToString:call.method]) {
       [_camera resumePreviewWithResult:result];
-    } else {
+    } else if ([@"testSetValue" isEqualToString:call.method]){
+        CGFloat value = ((NSNumber *)argsMap[@"value"]).floatValue;
+        [_camera testSetValue:value Result:result];
+    }
+    else {
       [result sendNotImplemented];
     }
   }

@@ -516,6 +516,21 @@ class AVFoundationCamera extends CameraPlatform {
     return Texture(textureId: cameraId);
   }
 
+  @override
+  Future<void> testSetValue(int cameraId, double value) async {
+    try {
+      await _channel.invokeMethod<double>(
+        'testSetValue',
+        <String, dynamic>{
+          'cameraId': cameraId,
+          'value': value,
+        },
+      );
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
   /// Returns the flash mode as a String.
   String _serializeFlashMode(FlashMode flashMode) {
     switch (flashMode) {

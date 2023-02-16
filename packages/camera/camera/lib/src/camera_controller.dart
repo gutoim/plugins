@@ -806,6 +806,16 @@ class CameraController extends ValueNotifier<CameraValue> {
     }
   }
 
+  /// Simple example of setting a value in camera Flutter => Camera
+  Future<void> testSetValue(double value) {
+    _throwIfNotInitialized('testSetValue');
+    try {
+      return CameraPlatform.instance.testSetValue(_cameraId, value);
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
   /// Releases the resources of this camera.
   @override
   Future<void> dispose() async {

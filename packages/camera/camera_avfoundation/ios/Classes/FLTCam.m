@@ -1141,11 +1141,29 @@ NSString *const errorMethod = @"error";
   NSTimeInterval elapsedTime = [NSDate timeIntervalSinceReferenceDate] - self.startTime;
   if (elapsedTime >= 1.0) {
     double fps = (double)self.frameCount / elapsedTime;
-    NSLog(@"FPS: %f", fps);
+//    NSLog(@"FPS: %f", fps);
     
     self.frameCount = 0;
     self.startTime = [NSDate timeIntervalSinceReferenceDate];
   }
+}
+
+- (void)testSetValue:(CGFloat)value Result:(FLTThreadSafeFlutterResult *)result {
+    
+    // check for errors
+    if (value < 0) {
+        NSString *errorMessage = [NSString
+                                  stringWithFormat:@"Value should be pozitive. Value: %f",
+                                  value];
+        
+        [result sendErrorWithCode:@"TEST_SET_ERROR" message:errorMessage details:nil];
+        return;
+    }
+        
+    // do the job
+    NSLog(@"value: %f", value);
+    
+    [result sendSuccess];
 }
 
 @end

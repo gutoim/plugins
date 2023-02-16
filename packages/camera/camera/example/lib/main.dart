@@ -164,6 +164,14 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ElevatedButton(
+                onPressed: () {
+                  _testSetValue();
+                },
+                child: Text('testSetValue')),
+          ),
         ],
       ),
     );
@@ -1050,6 +1058,19 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
   void _showCameraException(CameraException e) {
     _logError(e.code, e.description);
     showInSnackBar('Error: ${e.code}\n${e.description}');
+  }
+
+  Future<void> _testSetValue() async {
+    if (controller == null) {
+      return;
+    }
+
+    try {
+      await controller!.testSetValue(-10);
+    } on CameraException catch (e) {
+      _showCameraException(e);
+      return;
+    }
   }
 }
 
