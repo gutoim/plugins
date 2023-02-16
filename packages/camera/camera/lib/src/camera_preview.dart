@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:math';
+import 'dart:developer' as Logger;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +29,8 @@ class CameraPreview extends StatelessWidget {
         ? ValueListenableBuilder<CameraValue>(
             valueListenable: controller,
             builder: (BuildContext context, Object? value, Widget? child) {
+              Logger.log('Camera value: $value');
+
               return AspectRatio(
                 aspectRatio: _isLandscape()
                     ? controller.value.aspectRatio
