@@ -117,6 +117,18 @@ class FakeController extends ValueNotifier<CameraValue>
 
   @override
   Future<void> resumePreview() async {}
+
+  @override
+  Future<double> testGetValue() {
+    // TODO: implement testGetValue
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> testSetValue(double value) {
+    // TODO: implement testSetValue
+    throw UnimplementedError();
+  }
 }
 
 void main() {

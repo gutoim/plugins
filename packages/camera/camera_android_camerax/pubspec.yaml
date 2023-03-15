@@ -18,7 +18,9 @@ flutter:
         dartPluginClass: AndroidCameraCameraX
 
 dependencies:
-  camera_platform_interface: ^2.2.0
+  # camera_platform_interface: ^2.2.0
+  camera_platform_interface:
+    path: ../camera_platform_interface/
   flutter:
     sdk: flutter
   stream_transform: ^2.1.0

@@ -410,7 +410,7 @@ NSString *const errorMethod = @"error";
     }
     if (_onFrameAvailable) {
 //        usleep(50000);
-        [self updateFPS];
+//        [self updateFPS];
       _onFrameAvailable();
     }
   }
@@ -976,6 +976,9 @@ NSString *const errorMethod = @"error";
 
 - (void)receivedImageStreamData {
   self.streamingPendingFramesCount--;
+    
+    // how many streamed frames was processed
+    [self updateFPS];
 }
 
 - (void)getMaxZoomLevelWithResult:(FLTThreadSafeFlutterResult *)result {
@@ -1141,7 +1144,7 @@ NSString *const errorMethod = @"error";
   NSTimeInterval elapsedTime = [NSDate timeIntervalSinceReferenceDate] - self.startTime;
   if (elapsedTime >= 1.0) {
     double fps = (double)self.frameCount / elapsedTime;
-//    NSLog(@"FPS: %f", fps);
+    NSLog(@"FPS: %f", fps);
     
     self.frameCount = 0;
     self.startTime = [NSDate timeIntervalSinceReferenceDate];

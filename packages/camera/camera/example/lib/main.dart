@@ -174,21 +174,34 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
   Widget _testingWidget() {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ElevatedButton(
-              onPressed: () {
-                _testSetValue();
-              },
-              child: const Text('testSetValue')),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    _testSetValue();
+                  },
+                  child: const Text('testSetValue')),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    _testGetValue();
+                  },
+                  child: const Text('testGetValue')),
+            ),
+          ],
         ),
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: ElevatedButton(
               onPressed: () {
-                _testGetValue();
+                _startImageStream();
               },
-              child: const Text('testGetValue')),
+              child: const Text('Start image stream')),
         ),
       ],
     );
@@ -671,7 +684,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
     final CameraController cameraController = CameraController(
       cameraDescription,
-      kIsWeb ? ResolutionPreset.max : ResolutionPreset.medium,
+      kIsWeb ? ResolutionPreset.max : ResolutionPreset.high,
       enableAudio: enableAudio,
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
@@ -1098,6 +1111,21 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     try {
       final double value = await controller!.testGetValue();
       logger.log('Get value $value');
+    } on CameraException catch (e) {
+      _showCameraException(e);
+      return;
+    }
+  }
+
+  Future<void> _startImageStream() async {
+    if (controller == null) {
+      return;
+    }
+
+    try {
+      await controller!.startImageStream((CameraImage cameraImage) {
+        logger.log(cameraImage.format.group.name);
+      });
     } on CameraException catch (e) {
       _showCameraException(e);
       return;

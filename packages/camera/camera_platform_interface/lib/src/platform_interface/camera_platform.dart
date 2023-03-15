@@ -280,6 +280,16 @@ abstract class CameraPlatform extends PlatformInterface {
     throw UnimplementedError('buildView() has not been implemented.');
   }
 
+  /// Example of setting a value in camera plugin
+  Future<void> testSetValue(int cameraId, double value) {
+    throw UnimplementedError('testSetValue() has not been implemented.');
+  }
+
+  /// Example of getting a value from camera plugin
+  Future<double> testGetValue(int cameraId) {
+    throw UnimplementedError('testGetValue() has not been implemented.');
+  }
+
   /// Releases the resources of this camera.
   Future<void> dispose(int cameraId) {
     throw UnimplementedError('dispose() is not implemented.');
